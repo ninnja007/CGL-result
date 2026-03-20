@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Predictor 3000 😈</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes gradient-xy {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            60% { opacity: 1; transform: scale(1.02) translateY(-5px); }
+            100% { transform: scale(1) translateY(0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        @keyframes shine {
+            100% { left: 100%; }
+        }
+        .animate-bg {
+            background-size: 400% 400%;
+            animation: gradient-xy 15s ease infinite;
+        }
+        .float-fast { animation: float 3s ease-in-out infinite; }
+        .float-slow { animation: float 6s ease-in-out infinite; }
+        
+        /* Hide elements by default */
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="min-h-screen animate-bg bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-4 font-sans selection:bg-yellow-300 selection:text-black overflow-hidden relative">
+
+    <!-- Animated Background Blobs -->
+    <div class="absolute top-0 left-0 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-50 float-slow -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+    <div class="absolute top-0 right-0 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-50 float-fast translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-1/2 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 float-slow -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+
+    <!-- Main Card -->
+    <div class="relative z-10 bg-white/80 backdrop-blur-xl rounded-[2.5rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.3)] p-8 sm:p-12 w-full max-w-xl border border-white/60 transform transition-all duration-500 hover:shadow-[0_12px_48px_0_rgba(31,38,135,0.4)]">
+        
+        <!-- Header -->
+        <div class="text-center mb-10 group cursor-default">
+            <h1 class="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-red-500 mb-3 drop-shadow-sm transition-transform duration-300 group-hover:scale-105">
+                Result Predictor 3000 <span class="inline-block animate-bounce">😈</span>
+            </h1>
+            <p class="text-gray-600 font-bold text-lg italic opacity-80">
+                "Apne marks daalo aur sach ka saamna karo"
+            </p>
+        </div>
+
+        <!-- Input Form -->
+        <form id="predictForm" class="space-y-8">
+            <div class="space-y-6">
+                <!-- Core Marks Input -->
+                <div class="relative group transition-transform duration-300 focus-within:-translate-y-1">
+                    <label class="block text-sm font-extrabold text-gray-700 mb-2 ml-1 flex items-center gap-2">
+                        <span>🎯</span> Core Marks (0 - 390)
+                    </label>
+                    <div class="relative">
+                        <input
+                            type="number"
+                            id="coreMarks"
+                            placeholder="Kitne aaye lagbhag?"
+                            class="w-full pl-5 pr-12 py-4 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-purple-200 text-xl font-bold text-gray-800 placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/30 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]"
+                        />
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-2xl opacity-50 group-focus-within:opacity-100 group-focus-within:scale-125 group-focus-within:rotate-12 transition-all duration-300 pointer-events-none">
+                            📚
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Computer Marks Input -->
+                <div class="relative group transition-transform duration-300 focus-within:-translate-y-1">
+                    <label class="block text-sm font-extrabold text-gray-700 mb-2 ml-1 flex items-center gap-2">
+                        <span>💻</span> Computer Marks (0 - 30)
+                    </label>
+                    <div class="relative">
+                        <input
+                            type="number"
+                            id="compMarks"
+                            placeholder="Yaha kaisa rha performance?"
+                            class="w-full pl-5 pr-12 py-4 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-pink-200 text-xl font-bold text-gray-800 placeholder-gray-400 focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/30 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]"
+                        />
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-2xl opacity-50 group-focus-within:opacity-100 group-focus-within:scale-125 group-focus-within:-rotate-12 transition-all duration-300 pointer-events-none">
+                            ⌨️
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorContainer" class="hidden bg-red-100/80 backdrop-blur-sm border-l-4 border-red-500 text-red-700 p-4 rounded-2xl font-bold animate-[shake_0.5s_ease-in-out] flex items-center gap-3">
+                <span class="text-2xl">⚠️</span> <span id="errorText"></span>
+            </div>
+
+            <!-- Predict Button -->
+            <button
+                type="submit"
+                id="submitBtn"
+                class="group relative w-full overflow-hidden rounded-2xl bg-gray-900 px-8 py-5 text-xl font-extrabold text-white transition-all hover:scale-[1.02] active:scale-95 disabled:scale-100 disabled:opacity-90 disabled:cursor-wait shadow-[0_10px_40px_-10px_rgba(147,51,234,0.7)]"
+            >
+                <!-- Animated Gradient Background for Button -->
+                <div class="absolute inset-0 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 opacity-100 transition-opacity duration-300 group-hover:opacity-80"></div>
+                
+                <!-- Shine effect -->
+                <div class="absolute -left-[100%] top-0 h-full w-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-[shine_1.5s_ease-in-out_infinite]"></div>
+                
+                <span class="relative z-10 flex items-center justify-center gap-3">
+                    <!-- Spinner (hidden by default) -->
+                    <svg id="btnSpinner" class="hidden h-6 w-6 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span id="btnText">Predict My Future ✨</span>
+                </span>
+            </button>
+        </form>
+
+        <!-- Results Section -->
+        <div id="resultSection" class="hidden mt-10 space-y-5">
+            <h2 class="text-3xl font-black text-center text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-gray-600 mb-6 flex items-center justify-center gap-2">
+                <span class="float-fast inline-block">🔮</span> Bhavishyavani <span class="float-fast inline-block" style="animation-delay: 0.5s">✨</span>
+            </h2>
+            
+            <!-- Core Verdict Card -->
+            <div class="relative overflow-hidden bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200 p-6 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-[bounceIn_0.5s_ease-out]">
+                <div class="absolute -right-4 -top-4 text-6xl opacity-10 rotate-12 pointer-events-none">🎯</div>
+                <h3 class="text-sm font-black text-purple-600 uppercase tracking-widest mb-2 flex items-center gap-2">
+                    <span>Core Verdict</span>
+                </h3>
+                <p id="coreVerdictOutput" class="text-xl text-gray-800 font-bold leading-relaxed relative z-10"></p>
+            </div>
+
+            <!-- Computer Verdict Card -->
+            <div class="relative overflow-hidden bg-gradient-to-br from-pink-50 to-rose-50 border-2 border-pink-200 p-6 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-[bounceIn_0.7s_ease-out]">
+                <div class="absolute -right-4 -bottom-4 text-6xl opacity-10 -rotate-12 pointer-events-none">💻</div>
+                <h3 class="text-sm font-black text-pink-600 uppercase tracking-widest mb-2 flex items-center gap-2">
+                    <span>Computer Verdict</span>
+                </h3>
+                <p id="compVerdictOutput" class="text-xl text-gray-800 font-bold leading-relaxed relative z-10"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Disclaimer -->
+    <div class="mt-8 text-center max-w-md mx-auto relative z-10">
+        <p class="text-white/90 text-sm font-bold bg-black/20 px-5 py-3 rounded-2xl backdrop-blur-md shadow-lg border border-white/10 hover:bg-black/30 transition-colors">
+            ⚠️ Disclaimer: Ye website sirf mazaak ke liye hai. Result aapke kismat aur examiner ke mood par depend karta hai.
+        </p>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        const form = document.getElementById('predictForm');
+        const coreMarksInput = document.getElementById('coreMarks');
+        const compMarksInput = document.getElementById('compMarks');
+        
+        const errorContainer = document.getElementById('errorContainer');
+        const errorText = document.getElementById('errorText');
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnSpinner = document.getElementById('btnSpinner');
+        
+        const resultSection = document.getElementById('resultSection');
+        const coreVerdictOutput = document.getElementById('coreVerdictOutput');
+        const compVerdictOutput = document.getElementById('compVerdictOutput');
+
+        const getCoreVerdict = (marks) => {
+            if (marks < 250) return "Result dekhne se pehle gharwalo ko emotional speech de do 😭";
+            if (marks <= 280) return "Borderline situation hai… bonus ki prarthana shuru karo 🙏";
+            if (marks <= 300) return "Thoda izzat bach gayi hai 😌";
+            if (marks <= 320) return "Achha score hai, log guidance maangna shuru karenge 😎";
+            return "Aap to guidance channel ki taiyari chalu kardo 📈";
+        };
+
+        const getCompVerdict = (marks) => {
+            if (marks < 12) return "Chairman ko dhamkibhare khat likhna chalu kardo agar bonus nahi diya to... 💀";
+            if (marks < 15) return "Somwar aur Shukrawar ka vrat rakho… kya pata 4–5 bonus mil jaye 😭";
+            if (marks <= 20) return "Bonus ke liye pooja karo subah shaam 🙏";
+            return "Congratulations! 🎉 Aap chairman banne wale ho.";
+        };
+
+        const showError = (message) => {
+            errorText.textContent = message;
+            errorContainer.classList.remove('hidden');
+            
+            // Re-trigger shake animation
+            errorContainer.classList.remove('animate-[shake_0.5s_ease-in-out]');
+            void errorContainer.offsetWidth; // trigger reflow
+            errorContainer.classList.add('animate-[shake_0.5s_ease-in-out]');
+        };
+
+        const hideError = () => {
+            errorContainer.classList.add('hidden');
+        };
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            hideError();
+            resultSection.classList.add('hidden');
+
+            const coreMarksStr = coreMarksInput.value;
+            const compMarksStr = compMarksInput.value;
+
+            if (coreMarksStr === '' || compMarksStr === '') {
+                showError("Arre bhai, pehle marks toh daalo! 🤦‍♂️");
+                return;
+            }
+
+            const core = Number(coreMarksStr);
+            const comp = Number(compMarksStr);
+
+            if (core < 0 || core > 390) {
+                showError("Core marks 0 se 390 ke beech hone chahiye. Zyada hawa mein mat udo! 🦅");
+                return;
+            }
+
+            if (comp < 0 || comp > 30) {
+                showError("Computer marks 0 se 30 ke beech hone chahiye. Hacker ho kya? 👨‍💻");
+                return;
+            }
+
+            // Set Loading State
+            submitBtn.disabled = true;
+            btnSpinner.classList.remove('hidden');
+            btnText.textContent = 'Bhavishyavani loading...';
+
+            // Suspense delay for interactivity
+            setTimeout(() => {
+                // Remove Loading State
+                submitBtn.disabled = false;
+                btnSpinner.classList.add('hidden');
+                btnText.textContent = 'Predict My Future ✨';
+
+                // Set Results
+                coreVerdictOutput.textContent = getCoreVerdict(core);
+                compVerdictOutput.textContent = getCompVerdict(comp);
+                
+                // Show Results (Animations will run automatically via CSS)
+                resultSection.classList.remove('hidden');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
