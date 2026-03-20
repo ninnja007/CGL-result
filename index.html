@@ -7,62 +7,99 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Include HTML2Canvas for Meme Generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: #0f172a; /* Fallback */
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #050505; 
+            margin: 0;
+            overflow-x: hidden;
         }
 
-        /* Custom Neon Scrollbar */
+        /* Custom Frosted Scrollbar */
         ::-webkit-scrollbar {
-            width: 14px;
+            width: 10px;
         }
         ::-webkit-scrollbar-track {
-            background: #020617; 
+            background: rgba(255, 255, 255, 0.02); 
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, #ff007f, #7928ca); 
+            background: rgba(255, 255, 255, 0.2); 
             border-radius: 10px;
-            border: 3px solid #020617;
+            backdrop-filter: blur(10px);
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(to bottom, #ff4d94, #9b51e0); 
+            background: rgba(255, 255, 255, 0.4); 
         }
 
-        /* Neon Glow Utilities */
-        .neon-box {
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.2), inset 0 0 20px rgba(121, 40, 202, 0.1);
+        /* Apple Liquid Glass Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .neon-text-pink {
-            text-shadow: 0 0 10px rgba(255, 0, 127, 0.8), 0 0 20px rgba(255, 0, 127, 0.4);
-        }
-        .neon-text-purple {
-            text-shadow: 0 0 10px rgba(121, 40, 202, 0.8), 0 0 20px rgba(121, 40, 202, 0.4);
-        }
-
-        /* Animations */
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 127, 0.4); }
-            50% { box-shadow: 0 0 40px rgba(121, 40, 202, 0.6); }
-        }
-        .animate-glow {
-            animation: pulse-glow 3s infinite;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
         }
         
+        .glass-input {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 0 0 4px rgba(255, 255, 255, 0.05);
+            outline: none;
+        }
+
+        .glass-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .glass-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+        }
+        .glass-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Liquid Background Animations */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(40px, -60px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+            animation: blob 15s infinite alternate ease-in-out;
+        }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .slide-up {
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px) rotate(-2deg); }
-            75% { transform: translateX(8px) rotate(2deg); }
+            25% { transform: translateX(-8px) rotate(-1deg); }
+            75% { transform: translateX(8px) rotate(1deg); }
         }
         .animate-shake {
             animation: shake 0.4s ease-in-out;
@@ -70,96 +107,123 @@
 
         .hidden { display: none !important; }
 
-        /* Background grid for Gen Z aesthetic */
-        .bg-grid {
-            background-image: 
-                linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
+        /* Premium Text Styling */
+        .glass-text {
+            background: linear-gradient(to right, #ffffff, #a8b2d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.1);
         }
     </style>
 </head>
-<body class="min-h-screen bg-slate-900 bg-grid text-white flex flex-col items-center p-4 sm:p-8 relative selection:bg-pink-500 selection:text-white">
+<body class="min-h-screen flex flex-col items-center p-4 sm:p-8 relative selection:bg-white/30 selection:text-white">
+
+    <!-- Liquid Animated Orbs (Background) -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-indigo-600 rounded-full mix-blend-screen filter blur-[100px] opacity-50 animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-[45vw] h-[45vw] bg-fuchsia-600 rounded-full mix-blend-screen filter blur-[120px] opacity-40 animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-20%] left-[20%] w-[60vw] h-[60vw] bg-cyan-600 rounded-full mix-blend-screen filter blur-[130px] opacity-40 animate-blob animation-delay-4000"></div>
+    </div>
 
     <!-- Gopu's Corner -->
-    <div class="fixed top-4 right-4 sm:top-6 sm:right-6 z-50 bg-gray-900/80 backdrop-blur-md border border-purple-500/50 rounded-xl px-4 py-2 shadow-[0_0_15px_rgba(121,40,202,0.4)] animate-glow hover:scale-105 transition-transform cursor-default">
-        <span class="text-xs sm:text-sm font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+    <div class="fixed top-4 right-4 sm:top-6 sm:right-6 z-40 glass-panel rounded-full px-5 py-2 hover:scale-105 transition-transform cursor-default shadow-lg">
+        <span class="text-xs sm:text-sm font-bold uppercase tracking-widest text-white/90">
             gopu sabki ghumti game chalayega 🕹️
         </span>
     </div>
 
     <!-- Creator Badge -->
-    <div class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 bg-gray-900/50 backdrop-blur-md border border-gray-700/50 rounded-lg px-3 py-1.5 shadow-lg opacity-60 hover:opacity-100 hover:border-pink-500/50 transition-all duration-300 cursor-default">
-        <span class="text-xs sm:text-sm font-bold text-gray-400">
-            Created by <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">Abhishek</span> 🚀
+    <div class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40 glass-panel rounded-full px-4 py-2 hover:bg-white/10 transition-all duration-300 cursor-default shadow-lg">
+        <span class="text-xs sm:text-sm font-semibold text-white/70 tracking-wide">
+            Created by <span class="text-white font-bold">Abhishek</span> 🚀
         </span>
     </div>
 
-    <!-- Glowing Orbs -->
-    <div class="fixed top-20 left-10 w-64 h-64 bg-pink-600 rounded-full mix-blend-screen filter blur-[100px] opacity-40 pointer-events-none"></div>
-    <div class="fixed bottom-20 right-10 w-80 h-80 bg-purple-600 rounded-full mix-blend-screen filter blur-[120px] opacity-40 pointer-events-none"></div>
-
     <!-- Main Container -->
-    <div class="relative z-10 w-full max-w-2xl mt-10">
+    <div class="relative z-10 w-full max-w-2xl mt-12 sm:mt-20">
         
         <!-- Header -->
-        <div class="text-center mb-12">
-            <h1 class="text-5xl sm:text-6xl font-black mb-4 tracking-tight neon-text-pink text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 pb-2">
-                Result Reality Check 3000 <span class="inline-block animate-bounce text-white drop-shadow-none">💀</span>
+        <div class="text-center mb-14 drop-shadow-2xl">
+            <h1 class="text-5xl sm:text-6xl font-black mb-4 tracking-tight glass-text pb-2">
+                Result Reality Check 3000 <span class="inline-block animate-bounce text-white drop-shadow-md">💀</span>
             </h1>
-            <p class="text-xl sm:text-2xl font-bold text-gray-300 italic opacity-90">
+            <p class="text-xl sm:text-2xl font-medium text-white/60 italic tracking-wide">
                 "Marks daalo… aur emotional damage lo."
             </p>
         </div>
 
         <!-- Input Section -->
-        <div class="bg-gray-800/80 backdrop-blur-xl rounded-[2rem] p-8 sm:p-10 neon-box mb-8 animate-glow">
+        <div class="glass-panel rounded-[2rem] p-8 sm:p-10 mb-8 backdrop-saturate-150">
             <form id="predictForm" class="space-y-8">
                 
                 <div class="space-y-6">
+                    <!-- Category Selection -->
+                    <div class="group">
+                        <label class="block text-sm font-bold text-white/80 mb-2 ml-2 uppercase tracking-widest">
+                            🏷️ Category
+                        </label>
+                        <select
+                            id="category"
+                            required
+                            class="glass-input w-full px-6 py-4 rounded-2xl text-xl font-bold placeholder-white/30 appearance-none cursor-pointer"
+                        >
+                            <option value="" disabled selected class="bg-gray-900 text-white">Apni category chuno...</option>
+                            <option value="UR" class="bg-gray-900 text-white">UR (General - Hard Mode ☠️)</option>
+                            <option value="EWS" class="bg-gray-900 text-white">EWS (General Pro Max 📄)</option>
+                            <option value="OBC" class="bg-gray-900 text-white">OBC (Middle Child 🥛)</option>
+                            <option value="SC" class="bg-gray-900 text-white">SC (Safe Zone Player 🛡️)</option>
+                            <option value="ST" class="bg-gray-900 text-white">ST (Chill Vibes Only 🏕️)</option>
+                        </select>
+                        <p id="categoryTroll" class="text-sm font-bold text-rose-400 mt-2 ml-2 h-5 transition-all"></p>
+                    </div>
+
                     <!-- Core Marks -->
                     <div class="group">
-                        <label class="block text-lg font-bold text-pink-400 mb-2 ml-2 uppercase tracking-wider">
+                        <label class="block text-sm font-bold text-white/80 mb-2 ml-2 uppercase tracking-widest">
                             🎯 Core Marks (0 - 390)
                         </label>
                         <input
                             type="number"
                             id="coreMarks"
                             placeholder="Sach likhna bhai..."
-                            class="w-full px-6 py-4 rounded-2xl bg-gray-900/80 border-2 border-gray-700 text-2xl font-black text-white placeholder-gray-600 focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/30 transition-all shadow-inner"
+                            class="glass-input w-full px-6 py-4 rounded-2xl text-2xl font-bold placeholder-white/30"
+                            min="0" max="390"
+                            required
                         />
                     </div>
 
                     <!-- Computer Marks -->
                     <div class="group">
-                        <label class="block text-lg font-bold text-purple-400 mb-2 ml-2 uppercase tracking-wider">
+                        <label class="block text-sm font-bold text-white/80 mb-2 ml-2 uppercase tracking-widest">
                             💻 Computer Marks (0 - 30)
                         </label>
                         <input
                             type="number"
                             id="compMarks"
                             placeholder="Hacker vibes only..."
-                            class="w-full px-6 py-4 rounded-2xl bg-gray-900/80 border-2 border-gray-700 text-2xl font-black text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/30 transition-all shadow-inner"
+                            class="glass-input w-full px-6 py-4 rounded-2xl text-2xl font-bold placeholder-white/30"
+                            min="0" max="30"
+                            required
                         />
                     </div>
                 </div>
 
                 <!-- Error Toast -->
-                <div id="errorContainer" class="hidden bg-red-500/20 border-l-4 border-red-500 text-red-200 p-4 rounded-xl font-bold flex items-center gap-3">
-                    <span class="text-2xl">🚨</span> <span id="errorText"></span>
+                <div id="errorContainer" class="hidden glass-panel !border-red-400/50 !bg-red-500/10 text-white p-4 rounded-xl flex items-center gap-3">
+                    <span class="text-2xl">🚨</span> <span id="errorText" class="font-semibold tracking-wide"></span>
                 </div>
 
                 <!-- Predict Button -->
                 <button
                     type="submit"
                     id="submitBtn"
-                    class="w-full relative overflow-hidden rounded-2xl bg-gradient-to-r from-pink-600 to-purple-600 px-8 py-6 text-2xl font-black text-white transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(255,0,127,0.4)] hover:shadow-[0_0_50px_rgba(121,40,202,0.6)]"
+                    class="w-full relative glass-btn rounded-2xl px-8 py-5 text-xl font-bold text-white disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    <span id="btnText" class="relative z-10 flex items-center justify-center gap-3">
+                    <span id="btnText" class="relative z-10 flex items-center justify-center gap-3 tracking-wide transition-opacity">
                         Sach sunne ke liye click karo 😭
                     </span>
                     <!-- Button Loading Spinner -->
-                    <svg id="btnSpinner" class="hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-8 w-8 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg id="btnSpinner" class="hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -167,71 +231,71 @@
             </form>
         </div>
 
-        <!-- Result Section (This part will be converted to a Meme image) -->
+        <!-- Result Section -->
         <div id="resultContainer" class="hidden slide-up">
             
             <!-- Target for html2canvas -->
-            <div id="memeCard" class="bg-gray-800 border-2 border-gray-700 rounded-[2rem] p-6 sm:p-10 relative overflow-hidden mb-6 shadow-2xl">
+            <div id="memeCard" class="glass-panel rounded-[2rem] p-6 sm:p-10 relative overflow-hidden mb-6 backdrop-saturate-200">
                 <!-- Watermark for screenshot -->
-                <div class="absolute inset-0 opacity-5 pointer-events-none flex items-center justify-center">
-                    <span class="text-8xl font-black -rotate-45">REALITY CHECK</span>
+                <div class="absolute inset-0 opacity-[0.03] pointer-events-none flex items-center justify-center">
+                    <span class="text-8xl font-black -rotate-45 text-white">REALITY CHECK</span>
                 </div>
 
                 <!-- Meme Reaction -->
-                <div class="text-center mb-8">
-                    <div class="inline-block bg-gray-900 border border-gray-700 rounded-full px-6 py-2 mb-4 shadow-lg">
-                        <span id="randomMemeReaction" class="text-xl font-bold text-yellow-400"></span>
+                <div class="text-center mb-10">
+                    <div class="inline-block glass-panel !bg-white/5 rounded-full px-6 py-2 mb-4 shadow-xl">
+                        <span id="randomMemeReaction" class="text-lg font-bold text-white/90 tracking-wide"></span>
                     </div>
-                    <h2 class="text-3xl font-black neon-text-purple text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400">
+                    <h2 class="text-4xl font-black glass-text tracking-tight">
                         The Brutal Truth 📉
                     </h2>
                 </div>
 
                 <!-- Verdicts -->
-                <div class="space-y-4 mb-8 relative z-10">
+                <div class="space-y-5 mb-10 relative z-10">
                     <!-- Core -->
-                    <div class="bg-gray-900/80 border-l-4 border-pink-500 p-5 rounded-2xl">
-                        <h3 class="text-sm font-black text-pink-500 uppercase tracking-widest mb-2 flex justify-between">
-                            <span>Core Subjects</span>
-                            <span id="displayCore" class="text-gray-400"></span>
+                    <div class="glass-input p-6 rounded-2xl border-l-4 !border-l-indigo-400">
+                        <h3 class="text-xs font-bold text-white/50 uppercase tracking-[0.2em] mb-3 flex justify-between items-center">
+                            <span>Core Subjects <span id="displayCategory" class="text-indigo-300 ml-1 font-black"></span></span>
+                            <span id="displayCore" class="bg-white/10 px-3 py-1 rounded-full text-white/80"></span>
                         </h3>
-                        <p id="coreVerdictOutput" class="text-xl font-bold text-white"></p>
+                        <p id="coreVerdictOutput" class="text-xl font-medium text-white/90 leading-relaxed"></p>
                     </div>
                     <!-- Computer -->
-                    <div class="bg-gray-900/80 border-l-4 border-purple-500 p-5 rounded-2xl">
-                        <h3 class="text-sm font-black text-purple-500 uppercase tracking-widest mb-2 flex justify-between">
+                    <div class="glass-input p-6 rounded-2xl border-l-4 !border-l-fuchsia-400">
+                        <h3 class="text-xs font-bold text-white/50 uppercase tracking-[0.2em] mb-3 flex justify-between items-center">
                             <span>Computer</span>
-                            <span id="displayComp" class="text-gray-400"></span>
+                            <span id="displayComp" class="bg-white/10 px-3 py-1 rounded-full text-white/80"></span>
                         </h3>
-                        <p id="compVerdictOutput" class="text-xl font-bold text-white"></p>
+                        <p id="compVerdictOutput" class="text-xl font-medium text-white/90 leading-relaxed"></p>
                     </div>
                 </div>
 
                 <!-- Meters -->
-                <div class="space-y-6 relative z-10">
+                <div class="space-y-8 relative z-10">
                     
                     <!-- Emotional Damage Meter -->
-                    <div class="bg-gray-900 p-4 rounded-2xl border border-gray-700">
-                        <div class="flex justify-between items-end mb-2">
-                            <span class="font-bold text-red-400">Emotional Damage Level</span>
-                            <span id="damagePercent" class="font-black text-2xl text-red-500">0%</span>
+                    <div class="glass-input !bg-black/20 p-5 rounded-2xl">
+                        <div class="flex justify-between items-end mb-3">
+                            <span class="font-semibold text-white/70 tracking-wide">Emotional Damage Level</span>
+                            <span id="damagePercent" class="font-bold text-2xl text-rose-400">0%</span>
                         </div>
-                        <div class="w-full bg-gray-800 rounded-full h-4 overflow-hidden shadow-inner">
-                            <div id="damageBar" class="bg-gradient-to-r from-orange-500 to-red-600 h-4 rounded-full transition-all duration-1000 ease-out w-0"></div>
+                        <div class="w-full bg-black/40 rounded-full h-3 overflow-hidden shadow-inner">
+                            <div id="damageBar" class="bg-gradient-to-r from-orange-400 to-rose-500 h-3 rounded-full transition-all duration-1000 ease-out w-0 shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div>
                         </div>
-                        <p id="damageText" class="text-sm font-bold text-gray-400 mt-2 text-right"></p>
+                        <p id="damageText" class="text-xs font-bold text-white/50 mt-3 text-right uppercase tracking-wider"></p>
                     </div>
 
                     <!-- Bonus Probability -->
-                    <div class="bg-gray-900 p-4 rounded-2xl border border-gray-700">
-                        <div class="flex justify-between items-end mb-2">
-                            <span class="font-bold text-green-400">Chance of Bonus Marks</span>
-                            <span id="bonusPercent" class="font-black text-2xl text-green-500">0%</span>
+                    <div class="glass-input !bg-black/20 p-5 rounded-2xl">
+                        <div class="flex justify-between items-end mb-3">
+                            <span class="font-semibold text-white/70 tracking-wide">Chance of Bonus Marks</span>
+                            <span id="bonusPercent" class="font-bold text-2xl text-emerald-400">0%</span>
                         </div>
-                        <div class="w-full bg-gray-800 rounded-full h-4 overflow-hidden shadow-inner">
-                            <div id="bonusBar" class="bg-gradient-to-r from-emerald-400 to-green-600 h-4 rounded-full transition-all duration-1000 ease-out w-0"></div>
+                        <div class="w-full bg-black/40 rounded-full h-3 overflow-hidden shadow-inner">
+                            <div id="bonusBar" class="bg-gradient-to-r from-teal-400 to-emerald-500 h-3 rounded-full transition-all duration-1000 ease-out w-0 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
                         </div>
-                        <p id="bonusText" class="text-sm font-bold text-gray-400 mt-2 text-right"></p>
+                        <p id="bonusText" class="text-xs font-bold text-white/50 mt-3 text-right uppercase tracking-wider"></p>
                     </div>
 
                 </div>
@@ -240,23 +304,41 @@
             <!-- Share Button -->
             <button
                 id="shareBtn"
-                class="w-full flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-500 text-white px-8 py-5 rounded-2xl text-xl font-black transition-all hover:-translate-y-1 shadow-[0_10px_20px_rgba(37,99,235,0.3)]"
+                class="w-full glass-btn !bg-white/20 hover:!bg-white/30 text-white px-8 py-5 rounded-2xl text-lg font-bold flex items-center justify-center gap-3 tracking-wide"
             >
                 📸 Generate Result Meme
             </button>
         </div>
 
         <!-- Footer -->
-        <div class="mt-16 text-center pb-8">
-            <p class="text-gray-500 text-sm font-bold max-w-md mx-auto leading-relaxed border border-gray-700/50 p-4 rounded-xl bg-gray-800/30">
+        <div class="mt-16 text-center pb-12 relative z-10">
+            <p class="text-white/40 text-sm font-medium max-w-md mx-auto leading-relaxed glass-panel rounded-2xl p-5">
                 ⚠️ Disclaimer: Ye website sirf mazaak aur stress relief ke liye hai.<br>Actual result examiner ke mood aur bonus policy par depend karta hai.
             </p>
+        </div>
+    </div>
+
+    <!-- Image Modal for Safe Downloads -->
+    <div id="memeModal" class="fixed inset-0 z-[100] hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 opacity-0 transition-opacity duration-300">
+        <div class="glass-panel bg-black/40 rounded-3xl max-w-lg w-full p-6 flex flex-col items-center relative transform scale-95 transition-transform duration-300" id="modalContent">
+            <button id="closeModal" class="absolute top-4 right-4 text-white/50 hover:text-white text-3xl font-bold leading-none">&times;</button>
+            <h3 class="text-2xl font-black text-white mb-2 mt-4 text-center">Your Meme is Ready! 📸</h3>
+            <p class="text-white/60 text-sm mb-6 text-center">Long press or right-click the image to save/copy it.</p>
+            
+            <!-- Generated Image goes here -->
+            <img id="generatedMemeImg" class="w-full rounded-2xl shadow-2xl border border-white/10" alt="Generated Meme" />
+            
+            <a id="downloadFallback" class="mt-6 w-full glass-btn !bg-white/10 hover:!bg-white/20 py-4 rounded-xl text-center text-white font-bold tracking-wide" href="#" download="Reality_Check.png">
+                ⬇️ Try Direct Download
+            </a>
         </div>
     </div>
 
     <!-- Logic -->
     <script>
         const form = document.getElementById('predictForm');
+        const categoryInput = document.getElementById('category');
+        const categoryTroll = document.getElementById('categoryTroll');
         const coreMarksInput = document.getElementById('coreMarks');
         const compMarksInput = document.getElementById('compMarks');
         
@@ -269,13 +351,23 @@
         const resultContainer = document.getElementById('resultContainer');
         const memeCard = document.getElementById('memeCard');
         const shareBtn = document.getElementById('shareBtn');
+        
+        const memeModal = document.getElementById('memeModal');
+        const modalContent = document.getElementById('modalContent');
+        const closeModal = document.getElementById('closeModal');
+        const generatedMemeImg = document.getElementById('generatedMemeImg');
+        const downloadFallback = document.getElementById('downloadFallback');
 
         // Logic Functions
-        const getCoreVerdict = (marks) => {
-            if (marks < 250) return "Result se pehle gharwalo ko emotional speech de do. 'Paper bahut tough tha' script rehearse kar lo. 😭";
-            if (marks <= 280) return "Borderline zone detected. Abhi se bonus ke liye dua shuru karo. 🙏";
-            if (marks <= 300) return "Thodi izzat bach gayi hai. Log pooch sakte hain 'kitne aaye?' 😌";
-            if (marks <= 320) return "Solid score. Ab juniors strategy poochna shuru karenge. 😎";
+        const getCoreVerdict = (marks, category) => {
+            // Apply category offsets to the base ST threshold
+            const offsets = { UR: 30, OBC: 25, EWS: 20, SC: 10, ST: 0 };
+            const offset = offsets[category] || 0;
+
+            if (marks < (250 + offset)) return "Result se pehle gharwalo ko emotional speech de do. 'Paper bahut tough tha' script rehearse kar lo. 😭";
+            if (marks <= (280 + offset)) return "Borderline zone detected. Abhi se bonus ke liye dua shuru karo. 🙏";
+            if (marks <= (300 + offset)) return "Thodi izzat bach gayi hai. Log pooch sakte hain 'kitne aaye?' 😌";
+            if (marks <= (320 + offset)) return "Solid score. Ab juniors strategy poochna shuru karenge. 😎";
             return "Bas bas topper sahab. Guidance channel shuru karo. 'How I scored 320+ in 7 days strategy video.' 📈";
         };
 
@@ -307,6 +399,22 @@
             "System ko kosne ki tayari karo 🤬"
         ];
 
+        // Trolls applied when a user picks a category
+        const catTrolls = {
+            UR: "General Category = Zindagi mode: Extreme. Koi bachaane nahi aayega. 🤡",
+            EWS: "Sarkari paper se pehle income certificate banwana zaroori hai bhai! 📝",
+            OBC: "NCL (Non-Creamy Layer) wala certificate valid hai na? Dhyan rakhna! 🥛",
+            SC: "Cutoff thodi kam hai, par iska matlab ye nahi ki blank paper de aao. 📉",
+            ST: "Base cutoff vibes. Par aukaat anusar padhai toh karni padegi! 🏕️"
+        };
+
+        categoryInput.addEventListener('change', (e) => {
+            categoryTroll.textContent = catTrolls[e.target.value] || "";
+            categoryTroll.classList.remove('animate-shake');
+            void categoryTroll.offsetWidth; // trigger reflow
+            categoryTroll.classList.add('animate-shake');
+        });
+
         // UI Handlers
         const showError = (message) => {
             errorText.textContent = message;
@@ -321,24 +429,26 @@
             errorContainer.classList.add('hidden');
             resultContainer.classList.add('hidden');
 
+            const catVal = categoryInput.value;
             const coreVal = coreMarksInput.value;
             const compVal = compMarksInput.value;
 
-            if (coreVal === '' || compVal === '') {
-                showError("Marks daalo pehle, bina marks ke kaisa result? 🤦‍♂️");
+            if (!catVal) {
+                showError("Arre bhai, pehle category toh select kar lo! 🏷️");
                 return;
             }
 
             const core = Number(coreVal);
             const comp = Number(compVal);
 
-            if (core < 0 || core > 390) {
-                showError("Core marks 0 se 390 ke beech hote hain. Khaali paper submit kiya tha kya? 🦅");
+            // Robust validation check
+            if (coreVal === '' || isNaN(core) || core < 0 || core > 390) {
+                showError("Core marks 0 se 390 ke beech valid number hona chahiye. 🦅");
                 return;
             }
 
-            if (comp < 0 || comp > 30) {
-                showError("Computer marks 0 se 30 ki range mein hote hain. System hack kar liya kya? 👨‍💻");
+            if (compVal === '' || isNaN(comp) || comp < 0 || comp > 30) {
+                showError("Computer marks 0 se 30 ki range mein hote hain. 👨‍💻");
                 return;
             }
 
@@ -354,10 +464,11 @@
 
             setTimeout(() => {
                 // Populate Texts
+                document.getElementById('displayCategory').textContent = `[${catVal}]`;
                 document.getElementById('displayCore').textContent = `${core}/390`;
                 document.getElementById('displayComp').textContent = `${comp}/30`;
                 
-                document.getElementById('coreVerdictOutput').innerHTML = getCoreVerdict(core);
+                document.getElementById('coreVerdictOutput').innerHTML = getCoreVerdict(core, catVal);
                 document.getElementById('compVerdictOutput').innerHTML = getCompVerdict(comp);
                 
                 document.getElementById('randomMemeReaction').textContent = randomReaction;
@@ -393,35 +504,64 @@
         });
 
         // Screenshot Generator (html2canvas)
-        shareBtn.addEventListener('click', () => {
+        shareBtn.addEventListener('click', async () => {
             const originalText = shareBtn.innerHTML;
             shareBtn.innerHTML = `
                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Generating Meme...
+                Processing Meme...
             `;
             shareBtn.disabled = true;
 
-            html2canvas(memeCard, {
-                backgroundColor: '#1f2937', // matching Tailwind gray-800
-                scale: 2, // High resolution
-            }).then(canvas => {
-                // Create download link
-                const link = document.createElement('a');
-                link.download = `Reality_Check_${new Date().getTime()}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
+            try {
+                const canvas = await html2canvas(memeCard, {
+                    backgroundColor: '#11101e', // Dark background ensures text is visible
+                    scale: window.devicePixelRatio || 2, // High resolution for mobile
+                    logging: false,
+                    useCORS: true
+                });
 
-                // Reset Button
-                shareBtn.innerHTML = '✅ Meme Downloaded! Share it now';
+                const imgData = canvas.toDataURL('image/png');
+                
+                // Show in Modal to bypass iframe download restrictions
+                generatedMemeImg.src = imgData;
+                downloadFallback.href = imgData;
+                
+                memeModal.classList.remove('hidden');
+                // Trigger transition
                 setTimeout(() => {
-                    shareBtn.innerHTML = originalText;
-                    shareBtn.disabled = false;
-                }, 3000);
-            });
+                    memeModal.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                }, 10);
+
+            } catch (err) {
+                console.error("Meme generation failed: ", err);
+                alert("Oops! Couldn't generate the meme. Try taking a normal screenshot!");
+            } finally {
+                // Restore button
+                shareBtn.innerHTML = originalText;
+                shareBtn.disabled = false;
+            }
         });
+
+        // Modal Handlers
+        closeModal.addEventListener('click', () => {
+            memeModal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                memeModal.classList.add('hidden');
+            }, 300);
+        });
+
+        // Close modal if clicked outside the box
+        memeModal.addEventListener('click', (e) => {
+            if(e.target === memeModal) closeModal.click();
+        });
+
     </script>
 </body>
 </html>
